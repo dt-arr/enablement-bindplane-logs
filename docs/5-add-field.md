@@ -59,7 +59,7 @@ Click the "Save" button at the bottom.  We had previously saved our changes to t
 ### 6. Rollout to the Agent
 We're back at our configuration and we can see that our processor node is indicating that we have one processor now.  But also notice that we're prompted to "Start Rollout" and that we are currently viewing a draft version of our configuration.
 
-![Rollout Changes](img/5-add-field/6-rollout.png)
+<!-- ![Rollout Changes](img/5-add-field/6-rollout.png) -->
 
 Even though we've saved our changes to the configuration itself, the final step is to roll it out to the agents that use it (in our case, the single agent we added).
 

@@ -35,6 +35,28 @@ startBindplane
 
 Do **not** use `systemctl`, whatever the installer prints.
 
+Getting the download command:
+
+<video controls muted playsinline preload="metadata" style="width:100%; max-width:100%; height:auto;">
+  <source src="../img/3-bindplane-agent/get_agent_installation_command.mp4" type="video/mp4">
+  Your browser does not support embedded video.
+  <a href="../img/3-bindplane-agent/get_agent_installation_command.mp4">Download the video</a> instead.
+</video>
+
+[hs-video](https://dt-arr.github.io/enablement-bindplane-logs/img/3-bindplane-agent/get_agent_installation_command.mp4|Get the agent installation command|Navigating Bindplane to generate the Linux agent install command.)
+
+Installing on the Terminal:
+
+You should see some text scroll by, and a message indicating that the Bindplane collector was installed.
+
+<video controls muted playsinline preload="metadata" style="width:100%; max-width:100%; height:auto;">
+  <source src="../img/3-bindplane-agent/terminal-installation.mp4" type="video/mp4">
+  Your browser does not support embedded video.
+  <a href="../img/3-bindplane-agent/terminal-installation.mp4">Download the video</a> instead.
+</video>
+
+[hs-video](https://dt-arr.github.io/enablement-bindplane-logs/img/3-bindplane-agent/terminal-installation.mp4|Install the Bindplane collector|Running the install command in the dev container terminal.)
+
 ---
 
 ## 2. Create the configuration &mdash; [details](4-bindplane-configuration.md)
@@ -111,6 +133,19 @@ Your environment ID, plus the token from [Before you start](#before-you-start).
 
 ---
 
+### Watch: adding all four sources
+
+<video controls muted playsinline preload="metadata" style="width:100%; max-width:100%; height:auto;">
+  <source src="../img/4-bindplane-configuration/add-sources-video.mp4" type="video/mp4">
+  Your browser does not support embedded video.
+  <a href="../img/4-bindplane-configuration/add-sources-video.mp4">Download the video</a> instead.
+</video>
+
+[hs-video](https://dt-arr.github.io/enablement-bindplane-logs/img/4-bindplane-configuration/add-sources-video.mp4|Add all four sources|Adding the File, Syslog, NetFlow and Bindplane Collector sources to the configuration.)
+
+The same four sources are broken down step by step below.
+
+
 ## 3. Add a field &mdash; [details](5-add-field.md)
 
 *Why:* everyone running this lab might push into the same Dynatrace tenant. Stamping a `project` field on every record is how you tell your logs apart from the next person&rsquo;s &mdash; and it is the key OpenPipeline uses in step 6 to route only your traffic through your pipeline.
@@ -137,6 +172,9 @@ project
 ```
 <yourname>
 ```
+!!! tip "Changes aren't live until you roll them out"
+    Edits to a configuration are saved but not sent to your collectors. To apply them, click **Start Rollout**. Until you do, your collectors keep running the previous configuration.
+
 
 Click **+ Add field** to stamp more key/value pairs on every record if you want (e.g., `environment`, `owner`); otherwise one row is enough.
 
@@ -155,9 +193,21 @@ Remember this value: step 6 (`matchesValue(project, "<yourname>")`) must use exa
 
 ---
 
+![Processor Node](img/5-add-field/1-processor-node.png)
+
 ## 4. Parse the PAN-OS CSV &mdash; [details](pipeline-field-extraction.md)
 
 *Why:* firewall records arrive as one comma-separated string in the body. **Parse CSV** splits them into named `pan.*` fields, so later processors and your DQL queries can read `pan.action`, `pan.src_ip` and the rest directly.
+
+### Watch: parsing the PAN-OS CSV
+
+<video controls muted playsinline preload="metadata" style="width:100%; max-width:100%; height:auto;">
+  <source src="../img/pipeline-field-extraction/pan-os-csv-parsing.mp4" type="video/mp4">
+  Your browser does not support embedded video.
+  <a href="../img/pipeline-field-extraction/pan-os-csv-parsing.mp4">Download the video</a> instead.
+</video>
+
+[hs-video](https://dt-arr.github.io/enablement-bindplane-logs/img/pipeline-field-extraction/pan-os-csv-parsing.mp4|Parse the PAN-OS CSV|Configuring the Parse CSV processor on the Syslog source.)
 
 **Parse CSV** processor on the Syslog source. Telemetry type **LOGS**.
 
@@ -293,6 +343,8 @@ allow
 ```
 0.9
 ```
+![Sample Logs processor set to drop 90 percent of allow traffic](img/volume-reduction/sample-pan-os-allow-logs-0.9.png)
+
 
 ---
 
@@ -330,7 +382,7 @@ matchesValue(project, "<yourname>")
 | Linked destination | Dynatrace |
 | Processor | **Custom**, covering both signals (see YAML below) |
 
-Custom processor configuration:
+Custom processor configuration(apply only for metrics, don't include this for logs processor):
 
 ```yaml
 cumulativetodelta: {}
@@ -345,6 +397,8 @@ Then upload the dashboard from the repo's `Dashboards` folder.
 *Why:* a DevOps script leaks BCH access and secret keys into `/var/log/audit/audit.log`, which the **File** source collects. Hash the credentials before they leave the host so the plaintext never reaches Dynatrace, while the hash stays unique per credential &mdash; so you can count distinct leaks later.
 
 On the **File source** lane, click the pencil icon between its existing processor node and the shared one that feeds Dynatrace &rarr; **Insert Processor Node** &rarr; **Start Rollout**. Then click the new node &rarr; **Add Processor** &rarr; search `redact` &rarr; pick **Redact Sensitive Data**.
+
+![Insert Processor Node](img/7-masking-routing/1-insert-processor-node.png)
 
 ### Redact Sensitive Data settings
 
@@ -371,7 +425,14 @@ BCHK[A-Z0-9]{16}
 [A-Za-z0-9/+]{40}
 ```
 
+![Redaction Settings](img/7-masking-routing/2-redaction-settings.png)
+
+
 Save the processor &mdash; but **don't roll out yet**. Step 8.b narrows which records actually reach this redactor.
+
+
+
+
 
 ---
 
@@ -380,6 +441,11 @@ Save the processor &mdash; but **don't roll out yet**. Step 8.b narrows which re
 *Why:* right now **every** File-source record would go through the redactor, and those regexes could match something that merely looks like a 40-character base64 string. Route only the records that actually contain `BCH_ACCESS_KEY_ID=` through the redactor; everything else bypasses it, which avoids false positives and keeps the hot path fast.
 
 On the same File source lane, click the pencil icon between the earlier processor node and the Redact node from 8.a &rarr; **Insert Connector** &rarr; **Routing**.
+
+Choose "Insert Connector", and then choose "Routing"
+
+![Insert Connector](img/7-masking-routing/insert-connector.png)
+
 
 ### Routing connector
 
@@ -409,6 +475,9 @@ The same route condition written as OTTL (if you prefer typing it directly):
 ```
 IsMatch(body, "BCH_ACCESS_KEY_ID=|BCH_SECRET_ACCESS_KEY=")
 ```
+
+![Routing Config](img/7-masking-routing/3-routing-config.png)
+
 
 ### Wire the routes
 
@@ -440,6 +509,9 @@ Expression to copy:
 BCH_ACCESS_KEY_ID=(?<bch_access_key_id>\w+)
 ```
 
+![Parse Regex](img/8-metric-extraction/1-parse-regex.png)
+
+
 ### Signal to Metric connector
 
 | Setting | Value |
@@ -458,6 +530,9 @@ log.exposed_bch_credentials.count
 ```
 bch_access_key_id
 ```
+In the output of the processor we just created, click on the pencil icon, create a connector, and then choose "Signal to Metric"
+
+![Create Connector](img/8-metric-extraction/2-create-connector.gif)
 
 ---
 
