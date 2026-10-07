@@ -15,16 +15,17 @@ Once the collector is running and visible in the Bindplane UI, you're ready to t
 The written steps below follow the same flow.
 
 ### 1. Navigate to your Bindplane account
-Click the button "Install Agent"
+Click the button "Install Collector"
 <!-- ![Install Agent](img/3-bindplane-agent/install_agent.png) -->
 
 ### 2. Specify your collector configuration
 You can use the default, stable Collector Type.
 
+Choose **Linux** for the platform 
+
 You can leave "Fleet" blank.
 
-Choose **Linux** for the platform and click "Next"
-
+And click `Next`
 <!-- ![Agent Platform](img/3-bindplane-collector/agent_platform.png) -->
 
 ### Install the collector

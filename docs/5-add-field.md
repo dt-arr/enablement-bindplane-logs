@@ -75,9 +75,7 @@ Click on one of the Syslog logs and see the detailed view on the right side of t
 
 ![alt text](img/5-add-field/7-field-in-dynatrace.png)
 
-Add a filter to this view to see only our Bindplane Lab logs:
 
-![alt text](img/5-add-field/7-filtered-in-dynatrace.png)
 
 !!! tip "Dynatrace Segments"
     In Dynatrace, [Segments](https://docs.dynatrace.com/docs/manage/segments) allow you automatically filter the data you see across the platform, without having to explicity apply filters as you use it.
