@@ -169,18 +169,19 @@ Click **Save** and then **Save** again, and you'll be sent to the Configuration 
 
 ### 8. View the Configuration and Pipeline
 
-We've created a Bindplane Configuration that can deployed wherever we need to collect and send logs.  You can see the logs pipeline we created, but it's not doing much right now because we haven't told any collectors to use it.  Scroll down and you'll see a listing of all the collectors using this configuration (none yet!), and a button to "Add Collectors".
-
-![alt text](img/4-bindplane-configuration/6a-view-pipeline.png)
-
-
+The pipeline graph shows all four sources converging on the Dynatrace destination. Each source has its own processor slot, which is where you will add Parse CSV, Sampling and the rest in the sections that follow.
 
 ![Pipeline graph with all four sources](img/4-bindplane-configuration/6-view-pipeline-with-bindplane-collector-source.png)
 
 !!! tip "Throughput reads 0 B/m until an collectors is attached"
     The percentages on each link are the share of data flowing down that path. They stay at zero until you complete the next step, so do not read anything into them yet.
 
-### 9. Add the Agents to the Configuration
+We've created a Bindplane Configuration that can deployed wherever we need to collect and send logs.  You can see the logs pipeline we created, but it's not doing much right now because we haven't told any collectors to use it.  Scroll down and you'll see a listing of all the collectors using this configuration (none yet!), and a button to "Add Collectors".
+
+![alt text](img/4-bindplane-configuration/6a-view-pipeline.png)
+
+
+### 9. Add the Collectors to the Configuration
 
 1. Click "Add Collectors"
 2. In the pop-up dialog, choose the collector you created earlier
