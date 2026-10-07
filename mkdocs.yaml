@@ -8,7 +8,7 @@ nav:
   - "1. About": index.md
   - "2. Getting started": 2-getting-started.md
   - "3. Quick Reference": 10-quick-reference.md
-  - "4. Installing the Bindplane Agent": 3-bindplane-agent.md
+  - "4. Installing the Bindplane Collector": 3-bindplane-agent.md
   - "5. Bindplane Configuration": 4-bindplane-configuration.md
   - "6. Processors: Add a Field": 5-add-field.md
   - "7. Structured Field Extraction": pipeline-field-extraction.md
