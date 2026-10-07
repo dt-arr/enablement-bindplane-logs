@@ -103,7 +103,7 @@ Click **Add Source**, search for `netflow`, and choose **NetFlow**.
 
 Click **Save**
 
-### 5. Add the Bindplane source
+### 5. Add the Bindplane collector source
 
 This one collects the collector's own logs, which you will use later for self-monitoring. Search for `bindplane` and choose **Bindplane Collector**.
 

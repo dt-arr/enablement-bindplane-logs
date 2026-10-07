@@ -1,3 +1,6 @@
+!!! warning "Lunch and Learn"
+    If you are part of a lunch and learn session, simply follow the instructions by your instructors on accessing Bindplane, Dynatrace. If you already have a personal Bindplane and Dynatrace tenant/environment, feel free to use them
+
 Before you can start building your log pipeline, you need three things in place: a Bindplane account to manage your pipeline configuration, a Dynatrace tenant to receive the data, and a development environment to run the lab in.
 
 **Bindplane** is a telemetry pipeline management platform built on OpenTelemetry. You'll use it to install and remotely configure the agent that runs on your lab host. If you don't already have an account, you can sign up for free at [bindplane.com](https://bindplane.com/).
