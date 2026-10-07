@@ -147,7 +147,7 @@ Have a look at the documentation for Dyntrace's [OTel API](https://docs.dynatrac
 - for lunchnlearn users, enter `lunchnlearn`
 3. Enter the token you created for that environment in the [Getting Started](../2-getting-started) section. 
 - for lunchnlearn users, follow these instructions:
-- Run the following command:
+- Run the following command to find the token:
 
 ```
 grep '^DT_INGEST_TOKEN=' /workspaces/enablement-bindplane-logs/.devcontainer/.env | cut -d= -f2-
@@ -161,7 +161,7 @@ cat /workspaces/enablement-bindplane-logs/.devcontainer/.env
 
 ![alt text](img/4-bindplane-configuration/5-create-destination.png)
 
-Alternatively, you can enter a custom [Dynatrace OTLP endpoint](https://docs.dynatrace.com/docs/ingest-from/opentelemetry/otlp-api#base-url) url by choosing "Custom" in the dropdown:
+Advanced users: You can enter a custom [Dynatrace OTLP endpoint](https://docs.dynatrace.com/docs/ingest-from/opentelemetry/otlp-api#base-url) url by choosing "Custom" in the dropdown:
 
 ![alt text](img/4-bindplane-configuration/5-alt.png)
 
@@ -171,13 +171,9 @@ Click **Save** and then **Save** again, and you'll be sent to the Configuration 
 
 We've created a Bindplane Configuration that can deployed wherever we need to collect and send logs.  You can see the logs pipeline we created, but it's not doing much right now because we haven't told any collectors to use it.  Scroll down and you'll see a listing of all the collectors using this configuration (none yet!), and a button to "Add Collectors".
 
-![alt text](img/4-bindplane-configuration/6-view-pipeline.png)
+![alt text](img/4-bindplane-configuration/6a-view-pipeline.png)
 
-The configuration view lists every source you added, with the destination on the right.
 
-![Configuration summary](img/4-bindplane-configuration/6-view-pipeline-config.png)
-
-The pipeline graph shows all four sources converging on the Dynatrace destination. Each source has its own processor slot, which is where you will add Parse CSV, Sampling and the rest in the sections that follow.
 
 ![Pipeline graph with all four sources](img/4-bindplane-configuration/6-view-pipeline-with-bindplane-collector-source.png)
 
