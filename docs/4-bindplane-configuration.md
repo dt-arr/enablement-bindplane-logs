@@ -153,6 +153,11 @@ Have a look at the documentation for Dyntrace's [OTel API](https://docs.dynatrac
 grep '^DT_INGEST_TOKEN=' /workspaces/enablement-bindplane-logs/.devcontainer/.env | cut -d= -f2-
 ```
 
+Note: If you have issues with the above, you can find the token and other details by opening the following file:
+
+```
+cat /workspaces/enablement-bindplane-logs/.devcontainer/.env
+```
 
 ![alt text](img/4-bindplane-configuration/5-create-destination.png)
 
@@ -164,7 +169,7 @@ Click **Save** and then **Save** again, and you'll be sent to the Configuration 
 
 ### 8. View the Configuration and Pipeline
 
-We've created a Bindplane Configuration that can deployed wherever we need to collect and send logs.  You can see the logs pipeline we created, but it's not doing much right now because we haven't told any agents to use it.  Scroll down and you'll see a listing of all the agents using this configuration (none yet!), and a button to "Add Collectors".
+We've created a Bindplane Configuration that can deployed wherever we need to collect and send logs.  You can see the logs pipeline we created, but it's not doing much right now because we haven't told any collectors to use it.  Scroll down and you'll see a listing of all the collectors using this configuration (none yet!), and a button to "Add Collectors".
 
 ![alt text](img/4-bindplane-configuration/6-view-pipeline.png)
 
