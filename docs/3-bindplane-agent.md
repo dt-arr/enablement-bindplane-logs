@@ -50,7 +50,10 @@ You should see some text scroll by, and a message indicating that the Bindplane 
 
 <!-- ![Terminal](img/3-bindplane-agent/terminal.png) -->
 
-You may see some messages instructing you to use `systemctl` to start the Bindplane service.  DON'T DO THAT!  In this environment, you have a command called `startBindplane` instead.  Go ahead and run that in your terminal.
+You may see some messages instructing you to use `systemctl` to start the Bindplane service.  DON'T DO THAT! 
+
+In this environment, you have a command called `startBindplane` instead. 
+Execute the bellow command. 
 
 ```
 startBindplane

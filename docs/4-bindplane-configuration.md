@@ -18,7 +18,10 @@ Once you assign your agent and roll it out, you will see throughput in the Bindp
 ### 1. Create the configuration
 Click **Configurations** then **Create Configuration**
 
-Choose a descriptive name for your configuration, choose **Linux** for the platform, **Edge** for the Collector Role and click "next"
+- Choose a descriptive **name** for your configuration
+- Select the collector Type to **`BDOT .x (Stable)`**
+- Choose **Linux** for the `platform`
+-  **Edge** for the Collector Role and click "next"
 ![alt text](img/4-bindplane-configuration/1-create-configuration.png)
 
 ### Watch: adding all four sources
