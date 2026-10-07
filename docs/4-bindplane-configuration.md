@@ -44,10 +44,17 @@ Click **Add Source**, search for `file`, and choose **File**.
 
 Configure it with all three log files. These are the only three worth collecting: `auth.log`, `kern.log` and `cron.log` are duplicates of what is already in `syslog`, so adding them would double your volume for nothing.
 
+Configure as follows:
+
+Tip: You may want to click outside after you paste the file paths
+
 | Setting | Value |
 |---|---|
 | Short Description | `file` |
-| File Path(s) | `/var/log/syslog`<br>`/var/log/audit/audit.log`<br>`/var/log/fail2ban.log` |
+| File Path(s) | `/var/log/syslog` |
+| File Path(s) | `/var/log/audit/audit.log` |
+| File Path(s) | `/var/log/fail2ban.log` |
+
 | Log Type | `file` |
 | Multiline Parsing | `none` |
 
@@ -61,24 +68,14 @@ Click **Add Source**, search for `syslog`, and choose **Syslog**.
 
 ![Find the Syslog source](img/4-bindplane-configuration/2-find-source-syslog.png)
 
+!!! tip "Accept defaults"
+    Accept all defaults but just give a short description
+
 | Setting | Value |
 |---|---|
-| Short Description | `syslog` |
-| Listening IP Address | `0.0.0.0` |
-| Listening Port | `5140` |
-| Protocol | `rfc3164` |
-| Transport Protocol | `udp` |
-| Data Flow | `high` |
-| Timezone | `UTC` |
-| Parse To | `body` |
-| Multiline Parsing | `none` |
+| Short Description | `syslog` | 
 
 ![Configure the Syslog source](img/4-bindplane-configuration/2-find-source-syslog-configure.png)
-
-!!! warning "Two settings that matter later"
-    **Protocol** must be `rfc3164`, not 5424. The generator sends BSD-format records, and 5424 will fail to parse them.
-
-    **Parse To** must be `body`. It controls where the parsed syslog fields land, and the Parse CSV processor in a later section points at `body.message`. If you set this to `attributes`, that processor finds nothing and fails silently.
 
 Click **Save**
 
@@ -88,16 +85,13 @@ Click **Add Source**, search for `netflow`, and choose **NetFlow**.
 
 ![Find the NetFlow source](img/4-bindplane-configuration/2-find-source-netflow.png)
 
+!!! tip "Accept defaults"
+    Accept all defaults but just give a short description
+
 | Setting | Value |
 |---|---|
 | Short Description | `Netflow` |
-| Telemetry Type | `LOGS` |
-| Scheme | `netflow` |
-| Hostname | `0.0.0.0` |
-| Port | `2055` |
-| Sockets | `1` |
-| Workers | `1` |
-| Send Raw | unchecked |
+
 
 ![Configure the NetFlow source](img/4-bindplane-configuration/2-find-source-netflow-configure.png)
 
@@ -108,7 +102,10 @@ Click **Save**
 
 ### 5. Add the Bindplane collector source
 
-This one collects the collector's own logs, which you will use later for self-monitoring. Search for `bindplane` and choose **Bindplane Collector**.
+!!! tip "Accept defaults"
+    Accept all defaults but just give a short description
+
+This one collects the collector's own logs(and metrics), which you will use later for self-monitoring. Search for `bindplane` and choose **Bindplane Collector**.
 
 ![Find the Bindplane source](img/4-bindplane-configuration/3-add-bindplane-agent-logs-source.png)
 
@@ -147,7 +144,15 @@ Have a look at the documentation for Dyntrace's [OTel API](https://docs.dynatrac
 
 1. Give this Destination a descriptive name
 2. Enter your Dynatrace [Environment Id](https://docs.dynatrace.com/docs/shortlink/monitoring-environment#environment-id) 
-3. Enter the token you created for that environment in the [Getting Started](../2-getting-started) section.
+- for lunchnlearn users, enter `lunchnlearn`
+3. Enter the token you created for that environment in the [Getting Started](../2-getting-started) section. 
+- for lunchnlearn users, follow these instructions:
+- Run the following command:
+
+```
+grep '^DT_INGEST_TOKEN=' /workspaces/enablement-bindplane-logs/.devcontainer/.env | cut -d= -f2-
+```
+
 
 ![alt text](img/4-bindplane-configuration/5-create-destination.png)
 
