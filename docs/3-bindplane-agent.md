@@ -32,7 +32,9 @@ And click `Next`
 <!-- ![Agent Platform](img/3-bindplane-collector/agent_platform.png) -->
 
 ### Install the collector
-You'll be shown a command that installs the collector.  Copy it and run it in your terminal.
+You'll be shown a command that installs the collector.  
+
+- Copy it and run it in your terminal.
 
 <!-- ![Install Command](img/3-bindplane-agent/install_command.png) -->
 
