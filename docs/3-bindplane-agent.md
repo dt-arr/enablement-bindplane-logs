@@ -47,7 +47,7 @@ You should see some text scroll by, and a message indicating that the Bindplane 
 You may see some messages instructing you to use `systemctl` to start the Bindplane service.  DON'T DO THAT!  In this environment, you have a command called `startBindplane` instead.  Go ahead and run that in your terminal.
 
 ```
-> startBindplane
+startBindplane
 ```
 
 !!! warning "Bindplane Startup"
