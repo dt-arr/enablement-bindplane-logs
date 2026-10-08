@@ -200,25 +200,3 @@ Once you're done, navigate back to your configuration.
 
 ![alt text](img/4-bindplane-configuration/8-overview-flow.png)
 
-### 11. View Logs in Dynatrace
-
-Now let's verify that we're seeing the logs in Dynatrace.
-
-1. Visit your Dynatrace environment and open the "Logs" app from the left-hand navigation (or search for it by using the search function in the top-left)
-2. Click the "Run Query" button to fetch the latest logs from your environment.
-3. View the results.  You might have a mix of logs from all places in this view since this is *everything* in your environment.  The syslogs for this lab can be identified by starting with a number enclosed in `<` and `>`, followed by a timestamp, followed by the hostname of your Dev Container (which should match the agent name we created earlier).
-
-Example:
-```
-<6>1 2026-08-05T15:48:17.953Z lima-rancher-desktop ...
-```
-
-If you have so many logs streaming in that they may have been pushed out of the resultset, search for your Dev Container hostname using the filter bar at the top of the screen.
-
-![alt text](img/4-bindplane-configuration/9-logs-in-dt.png)
-
-Now, let's put Bindplane and Dynatrace to work to make these logs more useful!
-
-<div class="grid cards" markdown>
-- [Add a field using a Bindplane processor:octicons-arrow-right-24:](5-add-field.md)
-</div>
