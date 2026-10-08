@@ -210,6 +210,11 @@ Config which has errors: Fix this before you proceed!
 
 ![Check if telemetry is being dropped](img/4-bindplane-configuration/bad-destination.gif)
 
+!!! tip "Good Configuration"
+    Below is a screenshot where there are no telemetry being dropped and you notice only `info` and `warn` which you can ignore
+
+![Good config](img/4-bindplane-configuration/good-destination.gif)
+
 Once you're done, navigate back to your configuration.
 
 ![alt text](img/4-bindplane-configuration/8-overview-flow.png)
