@@ -24,7 +24,7 @@ Reducing volume in the pipeline, before data reaches any destination, lowers cos
 - Click on `Edit processors` close to the `syslog` source (it should read as 1 to indicate it already has one processor)
 - Click on ` Add processor`
 - Search and click **Delete Fields**. Telemetry type is **LOGS**.
-- Enter a Short description `Parse CSV`
+- Enter a Short description `Delete body.message`
 - Add these two conditions (this is same as what we defined before)
 
 | Match | Field | Operator | String |
@@ -40,6 +40,11 @@ Screenshot of the conditions:
  ![PAN-OS CSV Condition](img/pipeline-field-extraction/parse-csv-condition.png)   
 
 - Click inside `Body Fields` and select `message` [This means if the above conditions are met, the `body` field `message` will be dropped]
+- Click inside `Attribute Fields` and select `log.record.original` [This means if the above conditions are met, the `attribute` field `log.record.original` will be dropped]
+
+Screenshot showing that the `message` and `log.record.original` are deleted:
+
+![Delete Fields](img/volume-reduction/delete-fields.png)
 
 
 This reads `pan.action`, so it goes **after** the Parse CSV processor from [Structured Field Extraction](pipeline-field-extraction.md).
