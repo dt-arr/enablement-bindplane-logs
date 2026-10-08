@@ -94,7 +94,7 @@ fetch logs
 ```
 
 
-![alt text](img/5-add-field/notebook-dql.png)
+![alt text](img/5-add-field/notebook-dql.gif)
 
 
 Perfect!  Now we can focus on exactly what we need to.  Think about how you'd use this feature with the logs you currently collect.
