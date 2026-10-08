@@ -97,9 +97,19 @@ fetch logs
 ![alt text](img/5-add-field/notebook-dql.gif)
 
 
-Perfect!  Now we can focus on exactly what we need to.  Think about how you'd use this feature with the logs you currently collect.
 
-<div class="grid cards" markdown>
-- [Add Structure with OpenPipeline:octicons-arrow-right-24:](6-parsing-with-openpipeline.md)
-</div>
+Search for the log searches under your project
+
+- Click the `+` button and then select `DQL`
+- Paste the following query and hit the `Run` button.
+- Don't forget to change `TonyStark` to your name!
+
+You are now summarizing all the logs based on the log.file.name
+
+```
+fetch logs
+| filter matchesValue(project, "TonyStark")
+| summarize count = count(), by:{log.file.name}
+``` 
+Perfect!  Now we can focus on exactly what we need to.  Think about how you'd use this feature with the logs you currently collect.
 
