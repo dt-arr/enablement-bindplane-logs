@@ -206,6 +206,7 @@ Now let's check to see that data is flowing in our pipeline
 - If you see `warn` and `info` only, that means Telemetry is being sent successfully.
 
 
+Config which has errors: Fix this before you proceed!
 
 ![Check if telemetry is being dropped](img/4-bindplane-configuration/bad-destination.gif)
 
