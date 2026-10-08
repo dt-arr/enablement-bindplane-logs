@@ -21,6 +21,7 @@ Add a processor to your Syslog source
 - Search for **Parse CSV**. Telemetry type is **LOGS**.
 - Enter a Short description `Parse CSV`
 - Add these two conditions
+
 | Match | Field | Operator | String |
 |---|---|---|---|
 | Body | `appname` | Equals | `PAN-OS` |
