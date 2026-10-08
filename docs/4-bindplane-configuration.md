@@ -206,7 +206,7 @@ To view the errors:
 
 
 
-![Check if telemetry is being dropped](img/4-bindplane-configuration/dropped-data-because-of-bad-destination-credentials.gif
+![Check if telemetry is being dropped](img/4-bindplane-configuration/dropped-data-because-of-bad-destination-credentials.gif)
 
 Once you're done, navigate back to your configuration.
 
