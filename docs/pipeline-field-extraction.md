@@ -2,11 +2,11 @@
 
 ## The problem
 
-A PAN-OS TRAFFIC record arrives as one long comma separated string. Dynatrace stores it in the `content` field and has no idea that position 31 is the firewall action or that position 33 is the byte count. Everything in that record is technically present and practically unreachable.
+A PAN-OS TRAFFIC record arrives as one long comma-separated string. Dynatrace stores it in the `content` field as-is. You *can* pull values out at query time with DQL, since `splitString(content, ",")[31]` gets you the firewall action, but that work happens every time you run a query, in every query, dashboard tile, and alert that needs it. The analyst still has to know which index holds which value.
 
-Every question you ask has to split the string first, index the right position, and cast the result. The analyst has to know the field offsets by heart, the queries are unreadable, and nothing can be used as a dimension in a dashboard or an alert without repeating the same parsing expression.
+The bigger cost is what happens before the query. Because the pipeline can't tell an `allow` from a `deny` or a 40-byte flow from a 4 GB one, every record is shipped and stored in full. That includes the 100+ columns nobody looks at, and the high-volume traffic nobody needs to keep.
 
-Bindplane has a **Parse CSV** processor that does this. You give it the delimiter and a list of column names, and it turns the CSV into named fields. 
+Bindplane's **Parse CSV** processor fixes this at the source. You give it the delimiter and a list of column names, and it turns the CSV into named fields *in the pipeline*, before anything reaches Dynatrace. Once the fields have names, the rest of the pipeline can act on them. You can drop records you don't care about, remove columns you'll never query, set severity based on the action, and route different traffic to different destinations. Parsing isn't the goal. It's what makes reduction and enrichment possible.
 
 ## Configure it in Bindplane
 
