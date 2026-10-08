@@ -15,7 +15,8 @@ Bindplane has a **Parse CSV** processor that does this. You give it the delimite
 ![PAN-OS CSV Parsing](img/pipeline-field-extraction/pan-os-csv-parsing.gif)
 
 
-Add a processor to your Syslog source
+##### Add a processor to your Syslog source
+
 - Click on `Edit processors` close to the `syslog` source
 - Click on ` Add processor`
 - Search for **Parse CSV**. Telemetry type is **LOGS**.
