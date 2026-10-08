@@ -64,3 +64,7 @@ Screenshot showing that the `message` field will be deleted:
 Validate within Bindplane before saving to see the volume reduction:
 
 ![Validate sampling](img/volume-reduction/sampling-before-after.png)
+
+
+!!! tip "Rollout"
+    Don't forget to rollout the change the collectors
