@@ -40,9 +40,8 @@ Screenshot of the conditions:
  ![PAN-OS CSV Condition](img/pipeline-field-extraction/parse-csv-condition.png)   
 
 - Click inside `Body Fields` and select `message` [This means if the above conditions are met, the `body` field `message` will be dropped]
-- Click inside `Attribute Fields` and select `log.record.original` [This means if the above conditions are met, the `attribute` field `log.record.original` will be dropped]
 
-Screenshot showing that the `message` and `log.record.original` are deleted:
+Screenshot showing that the `message` are deleted:
 
 ![Delete Fields](img/volume-reduction/delete-fields.png)
 
