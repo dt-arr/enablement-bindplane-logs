@@ -197,7 +197,7 @@ Now let's check to see that data is flowing in our pipeline
 2. See the visualization of your pipeline on the right.  You should see that your pipeline is shipping data to Dynatrace by viewing the MB/h. 
 
 !!! danger "Check if telemetry is being dropped"
-    If your telemetry is being dropped by the collector because of bad destination URL or bad token, you will find errors. 
+    If your telemetry is being dropped by the collector because of bad destination URL or bad token, you will need to investigate the cause and remediate it. 
 
 ##### To view the errors:
 
@@ -207,7 +207,7 @@ Now let's check to see that data is flowing in our pipeline
 
 
 
-![Check if telemetry is being dropped](img/4-bindplane-configuration/dropped-data-because-of-bad-destination-credentials.gif)
+![Check if telemetry is being dropped](img/4-bindplane-configuration/bad-destination.gif)
 
 Once you're done, navigate back to your configuration.
 
