@@ -15,7 +15,7 @@ This section addresses both issues in order:
 
 Reducing volume in the pipeline, before data reaches any destination, lowers costs across the board: less network bandwidth between sites and the cloud, less storage consumed, and less data scanned at query time. The effect is most pronounced for destinations priced on daily ingest volume, such as many traditional SIEM platforms, where high-volume firewall logs are often a major driver of licensing cost. Because sampling is applied only to routine permitted traffic, the records needed for security analysis are unaffected.
 
-## Configure it in Bindplane
+## Volume reduction
 
 ### Volume reduction by removing the raw message
 
@@ -45,8 +45,7 @@ Screenshot showing that the `message` are deleted:
 
 ![Delete Fields](img/volume-reduction/delete-fields.png)
 
-
-This reads `pan.action`, so it goes **after** the Parse CSV processor from [Structured Field Extraction](pipeline-field-extraction.md).
+## Sampling ALLOW logs
 
 Add a processor and search for **Sampling**. Two settings.
 
