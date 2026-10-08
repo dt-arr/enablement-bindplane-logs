@@ -104,15 +104,19 @@ Finding large transfers on a denied session.
 
 ```
 fetch logs
-| filter project == "TonyStark" //DONT FORGET TO CHANGE THE VALUE!
+| filter project == "TonyStark" // DONT FORGET TO CHANGE THE VALUE from TonyStark TO YOUR NAME
 | filter appname == "PAN-OS"
 | filter matchesPhrase(content, "TRAFFIC,end")
-| fieldsAdd action = splitString(content, ",")[31
+| fieldsAdd action = splitString(content, ",")[31] // THIS SPLITS THE CONTENT BY THE COMMA ',' DELIMITER AND FETCHES THE 31ST FIELD
 ```
 
 **After:**
 
 ```
 fetch logs
-| filter pan.action != "allow" and toLong(pan.bytes_sent) > 1000000
+| filter project == "TonyStark" // DONT FORGET TO CHANGE THE VALUE from TonyStark TO YOUR NAME
+| filter appname == "PAN-OS"
+| filter matchesPhrase(content, "TRAFFIC,end") 
+| sort  timestamp desc
+| fieldsKeep timestamp, "pan.*" // LETS LOOK AT ALL THE EXTRACTED FIELDS THAT STARTS WITH PAN
 ```
