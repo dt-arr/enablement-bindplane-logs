@@ -2,18 +2,16 @@
 
 ## The problem
 
-Firewall traffic logs are typically one of the highest-volume sources in an environment, and most individual records are of low value. PAN-OS writes a TRAFFIC record for every completed session, and the majority of those sessions were permitted and ended normally. In the mock environment used in this lab, about 92 percent of TRAFFIC records have `action=allow` with a routine session end reason such as `tcp-fin` or `aged-out`.
+Firewall traffic logs are among the highest-volume sources in most environments, and most records are routine. In this lab's mock environment, about 92 percent of PAN-OS TRAFFIC records are permitted sessions that ended normally (`tcp-fin`, `aged-out`). The remaining 8 percent, sessions with `deny`, `drop`, or `reset-both`, are the ones needed for investigations and must arrive complete.
 
-The remaining 8 percent are the records most likely to be needed in an investigation. A `deny`, `drop`, or `reset-both` session indicates that a security policy was enforced, so these records should be forwarded complete and unsampled.
+Parsing has also added redundancy: each record now carries both the original CSV string in `body.message` and the same values as named fields.
 
-There is also a second source of unnecessary volume, introduced by the parsing step. After Parse CSV runs, each record contains both the original CSV string in `body.message` and the same values as named fields. Sending both means every record carries its data twice.
+This section addresses both, in order:
 
-This section addresses both issues in order:
+1. **Remove the raw message.** Drop `body.message` now that its contents are parsed.
+2. **Sample routine traffic.** Forward all denied, dropped, and reset sessions in full, and sample permitted sessions at a ratio you choose.
 
-1. **Remove the raw message.** Once the fields have been parsed, the original string in `body.message` is redundant and can be dropped.
-2. **Sample routine traffic.** Forward all denied, dropped, and reset sessions at full fidelity, and sample permitted sessions at a ratio you choose.
-
-Reducing volume in the pipeline, before data reaches any destination, lowers costs across the board: less network bandwidth between sites and the cloud, less storage consumed, and less data scanned at query time. The effect is most pronounced for destinations priced on daily ingest volume, such as many traditional SIEM platforms, where high-volume firewall logs are often a major driver of licensing cost. Because sampling is applied only to routine permitted traffic, the records needed for security analysis are unaffected.
+Reducing volume in the pipeline lowers network, storage, and query costs at every destination, especially ingest-priced SIEM platforms, where firewall logs are often a major licensing cost. Because only routine traffic is sampled, security analysis is unaffected.
 
 ## Volume reduction
 
@@ -41,7 +39,7 @@ Screenshot of the conditions:
 
 - Click inside `Body Fields` and select `message` [This means if the above conditions are met, the `body` field `message` will be dropped]
 
-Screenshot showing that the `message` are deleted:
+Screenshot showing that the `message` field will be deleted:
 
 ![Delete Fields](img/volume-reduction/delete-fields.png)
 
@@ -49,7 +47,7 @@ Screenshot showing that the `message` are deleted:
 
 - Add another processor to the existing 2 processors
 - Search for **Sample Logs** and select it
-- Give a short description like **Sample ALLOW logs**
+- Give a short description like **sample**
 - Click on **Add Condition**
 - Select ``Body`` for Match
 - Click inside Field and select `pan["action"]`
