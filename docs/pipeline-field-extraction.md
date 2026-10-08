@@ -31,6 +31,7 @@ Bindplane has a **Parse CSV** processor that does this. You give it the delimite
 !!! danger "The second condition is CONTAINS and not EQUAL"
     Make sure you select CONTAINS for the condition that matches the text `,TRAFFIC,end,`
 
+Screenshot of the conditions:
 
  ![PAN-OS CSV Condition](img/pipeline-field-extraction/parse-csv-condition.png)   
 
@@ -56,19 +57,18 @@ Under headers, paste the following:
 futureuse1,futureuse2,receive_time,serial_number,type,subtype,futureuse3,generate_time,src_ip,dst_ip,nat_src_ip,nat_dst_ip,rule_name,src_user,dst_user,app,vsys,src_zone,dst_zone,inbound_if,outbound_if,log_action,futureuse4,session_id,repeat_cnt,src_port,dst_port,nat_src_port,nat_dst_port,flags,protocol,action,bytes,bytes_sent,bytes_received,packets,elapsed,session_end_reason
 ```
 
+Screenshot of the fields to select:
+
+
  ![PAN-OS CSV Parsing fields](img/pipeline-field-extraction/parse-csv-source-destination.png)   
-
-!!! danger "Source Field is Body, not Attributes"
-    The Bindplane Syslog source runs a `move` operator that relocates `appname`, `message`, `hostname`, `facility` and `priority` from attributes into the body. Point Parse CSV at attributes and it will find nothing, silently.
-
 
 
 !!! tip "Don't forget to rollout the change"
-    The Bindplane Syslog source runs a `move` operator that relocates `appname`, `message`, `hostname`, `facility` and `priority` from attributes into the body. Point Parse CSV at attributes and it will find nothing, silently.
+    Once you save the processor, dont forget to click the `Start Rollout` to apply these changes to the collectors
 
 ## The fields you get
 
-Verified against live records. The ones that matter for the later exercises:
+All the below fields are now parsed and ready to go in the destination
 
 | Field | Example |
 |---|---|
@@ -87,22 +87,12 @@ Verified against live records. The ones that matter for the later exercises:
 
 The `futureuse` columns are real PAN-OS padding fields. They are named so the positions line up, and you can ignore them.
 
-
-Or count what actually reached Dynatrace, which also catches a record that changed in flight:
-
-```
-fetch logs
-| filter matchesPhrase(content, "TRAFFIC,end")
-| fieldsAdd field_count = arraySize(splitString(content, ","))
-| summarize count(), by: {field_count}
-```
-
-
+ 
 ## Before and after at query time
 
-Finding large transfers on a denied session.
+Run these two queries to compare the same PAN-OS traffic logs before the rollout and after the pipeline parses them. The first query has to pull the `action` value out of the raw CSV by position at query time. The second shows the same information already extracted into named `pan.*` attributes, ready to filter and aggregate on directly.
 
-**Before:**
+**Before the rollout:**
 
 ```
 fetch logs
@@ -112,7 +102,7 @@ fetch logs
 | fieldsAdd action = splitString(content, ",")[31] // THIS SPLITS THE CONTENT BY THE COMMA ',' DELIMITER AND FETCHES THE 31ST FIELD
 ```
 
-**After:**
+**After the rollout that included CSV Parsing:**
 
 ```
 fetch logs
