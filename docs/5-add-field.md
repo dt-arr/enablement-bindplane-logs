@@ -69,16 +69,33 @@ Go ahead and click "Start Rollout" to push this change to the agent.
     Notice the "Compare" button next to "Start Rollout".  Clicking it will show you the underlying declarative YAML that is used to construct your configuration.
 
 ### 7. Filtering in Dynatrace
-Once the rollout is complete, switch to your Dynatrace environment and click "Run Query" again to fetch the latest logs.
+Once the rollout is complete, switch to your Dynatrace environment 
+
+- Search for the `logs` app in Dynatrace
+- In the FILTER bar, type `project` as a key
+- Select `=` and then wait for your project name(your name) to appear and select your name
+- Cick "Run Query" to fetch the latest logs.
 
 Click on one of the Syslog logs and see the detailed view on the right side of the window.  There's our added field!  Now we can use it to filter for any logs coming from this lab.
 
 ![alt text](img/5-add-field/7-field-in-dynatrace.png)
 
+#### 8. Searching using Dynatrace Notebooks
+- Search for the `Notebooks` app in Dynatrace
+- Create a `New Notebook`
+- Give it a name if you like
+- Click the `+` button and then select `DQL`
+- Paste the following query and hit the `Run` button.
+- Don't forget to change `TonyStark` to your name!
 
-!!! tip "Dynatrace Segments"
-    In Dynatrace, [Segments](https://docs.dynatrace.com/docs/manage/segments) allow you automatically filter the data you see across the platform, without having to explicity apply filters as you use it.
-    Optional: create a segment for logs using the filter you applied above.
+```
+fetch logs
+| filter matchesValue(project, "TonyStark")
+```
+
+
+![alt text](img/5-add-field/notebook-dql.png)
+
 
 Perfect!  Now we can focus on exactly what we need to.  Think about how you'd use this feature with the logs you currently collect.
 
