@@ -47,7 +47,8 @@ Screenshot showing that the `message` are deleted:
 
 ## Sampling ALLOW logs
 
-Add a processor and search for **Sampling**. Two settings.
+- Add another processor to the existing 2 processors
+- Search for **Sampling**. 
 
 **Condition**
 
