@@ -5,9 +5,9 @@ In this section you build your first configuration: four sources and one destina
 | Source | Collects | Setting |
 |---|---|---|
 | **File** | Linux host logs | Three paths, listed in step 2 |
-| **Syslog** | PAN-OS firewall records | UDP `5140`, RFC 3164 |
-| **NetFlow** | Flow records | UDP `2055` |
-| **Bindplane Collector** | The collector's own logs and metrics | Defaults, no changes needed |
+| **Syslog** | PAN-OS firewall records | Defaults |
+| **NetFlow** | Flow records | Defaults |
+| **Bindplane Collector** | The collector's own logs and metrics | Defaults |
 
 | Destination | Sends to |
 |---|---|
@@ -55,9 +55,12 @@ Tip: You may want to click outside after you paste the file paths
 | File Path(s) | `/var/log/audit/audit.log` |
 | File Path(s) | `/var/log/fail2ban.log` |
 
+
 | Log Type | `file` |
+| --- | --- |
 | Multiline Parsing | `none` |
 
+Sample screentshot:
 ![Configure the File source paths](img/4-bindplane-configuration/2-find-source-file-paths.png)
 
 Click **Save**
@@ -143,11 +146,12 @@ We need to send our logs somewhere to make use of them.  Let's create a Destinat
 Have a look at the documentation for Dyntrace's [OTel API](https://docs.dynatrace.com/docs/ingest-from/opentelemetry/otlp-api#base-url) to understand how to structure your endpoint URL.
 
 1. Give this Destination a descriptive name
-2. Enter your Dynatrace [Environment Id](https://docs.dynatrace.com/docs/shortlink/monitoring-environment#environment-id) 
-- for lunchnlearn users, enter `lunchnlearn`
-3. Enter the token you created for that environment in the [Getting Started](../2-getting-started) section. 
-- for lunchnlearn users, follow these instructions:
-- Run the following command to find the token:
+2. Default: Select **Deployment Type** to `SaaS`
+3. Enter your Dynatrace [Environment Id](https://docs.dynatrace.com/docs/shortlink/monitoring-environment#environment-id)
+    - for lunchnlearn users, enter `lunchnlearn`
+4. Enter the token you created for that environment in the [Getting Started](../2-getting-started) section.
+    - for lunchnlearn users, follow these instructions:
+        - Run the following command to find the token:
 
 ```
 grep '^DT_INGEST_TOKEN=' /workspaces/enablement-bindplane-logs/.devcontainer/.env | cut -d= -f2-

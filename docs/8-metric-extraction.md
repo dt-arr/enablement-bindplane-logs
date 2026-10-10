@@ -8,30 +8,26 @@ Because the redaction processor runs before the metric extraction in this pipeli
 
 ### 1. Parse the Credential Key
 
-We're going to want to find out how many different sets of credentials were leaked, and how often.
-Let's add a processor to the same node we used to redact the sensitive information.
 
-1. Click "Add Processor".  Make sure to add the new processor after the Redaction one.  Processors are executed from top to bottom and we want to parse the redacted value, not the original one.
-2. Find the Processor named "Parse with Regex" and select it.
-3. Create a name for the new Proccesor
-4. Beacuse we have already routed the logs, we know that only the logs we are targeting will ever pass through this processor, so no need for a condition.
-5. For "Target Field Type", select "Attribute".  This means we want to add a new attribute field as a peer to the log body, not modify the body itself.
-6. Leave target field blank - this will allow us to name the field inside of our regular expression (useful for parsing multiple fields at once)
-7. Enter this regular expression: `BCH_ACCESS_KEY_ID=(?<bch_access_key_id>\w+)` it will match the key name and then capture the next string of word characters (`\w+`) after the equals sign. Whatever we place between `<` and `>` will become the attribute name.
+ ![Parse Regex](img/8-metric-extraction/05-extract-access-key-by-parse-w-regex.gif)
 
-You should see that the regular expression matches the key name.  Click "Save" and you'll see a preview of the extracted field on the right.
-
+1. Click on the **processor node** where we did the masking previously
+2. Add a new processor **Parse with Regex**
+3. Give it a name like `Extract Access Key ID`
+4. Ensure **Source Field Type** to `Body` (default)
+5. Change **Target Field Type** to `Attribute`
+6. In the **Regex Pattern**, paste the pattern `BCH_ACCESS_KEY_ID=(?<bch_access_key_id>\w+)`
+8. Click `Apply` and verify on the right that a new attribute `bch_access_key_id` with the Access Key ID is populated.
+    See sample screenshot:
 ![Parse Regex](img/8-metric-extraction/1-parse-regex.png)
 
-Save the changes to your processor and then rollout your changes to the agent.
+7. After you confirm that the attribute exist, click `Save` followed by `Rollout`.
 
 ### 2. Create a Metric
 
-To create a metric from logs, we'll use a "Signal to Metric" connector.
+1. Insert a new connector after the processor that we just modified as show in the below animation
 
-In the output of the processor we just created, click on the pencil icon, create a connector, and then choose "Signal to Metric"
-
-![Create Connector](img/8-metric-extraction/2-create-connector.gif)
+![Create Connector](img/8-metric-extraction/01-insert-connector.gif)
 
 Once the dialog for the connector opens, edit the configuration:
 
@@ -40,22 +36,25 @@ Once the dialog for the connector opens, edit the configuration:
 3. Add the attribute from our log for the key that we masked `bch_access_key_id`.  This will add a dimension to the metric that we can split or summarize by.
 4. Click "Save" to create it.
 
-![Signal to Metrics](img/8-metric-extraction/2-signal-to-metrics-connector.png)
+You should see the connector like below:
+![Signal to Metrics](img/8-metric-extraction/02-signal-to-metrics.png)
 
 
 ### Metrics Pipeline
 
 Once your connector is created, you'll notice the layout of your pipeline has changed, and your connector doesn't sit exactly between the processor and the output.
 
-![New Connector](img/8-metric-extraction/3-added-signal-to-metrics.png)
-
 This is beacuse we are now emitting a new telemetry type, Metrics, from our pipeline.  At this point, Bindplane will automatically route the Metrics coming out the this connector into our **Metrics Pipeline**.
 
 The Metrics Pipeline is just below the logs piplin in the UI. Scroll down and expand it by clicking on the chevron.  
 
-**Rollout the changes** and you'll see that the new Metric we created is flowing through this pipeline and to our Dynatrace destination.
+1. Under **Metrics** pipeline, click the newly created `Signal to Metrics`
+2. Click **+** near the Signal to Metrics and click the processor close to the Dynatrace destination
 
-![Metrics Pipeline](img/8-metric-extraction/3-metrics-pipeline.png)
+![New Connector](img/8-metric-extraction/03-connect-metrics-dt.gif)
+
+
+**Rollout the changes** and you'll see that the new Metric we created is flowing through this pipeline and to our Dynatrace destination.
 
 
 ### Exploring and Using Metrics
